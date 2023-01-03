@@ -20,3 +20,4 @@ COPY --from=build /build/node_modules /albatross/node_modules
 WORKDIR /albatross
 
 ENTRYPOINT ["node", "/albatross/albatross.js"]
+CMD ["migrate"]
