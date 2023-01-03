@@ -1,11 +1,10 @@
 {
-	"name": "@warder/albatross",
+	"name": "@remotezygote/albatross",
 	"version": "1.0.0",
 	"description": "Migrator",
-	"main": "src/index.js",
+	"main": "dist/albatross.js",
 	"author": "John Bragg",
-	"license": "UNLICENSED",
-	"private": true,
+	"license": "MIT",
 	"scripts": {
 		"build": "esbuild src/index.ts --platform=node --external:pg --external:pg-native --bundle --minify --outfile=dist/albatross.js",
 		"postinstall": "yarn build"
@@ -15,7 +14,6 @@
 		"commander": "^9.4.0",
 		"env-pino": "^1.0.1",
 		"esbuild": "^0.14.54",
-		"esbuild-plugin-path-alias": "^1.0.6",
 		"fast-glob": "^3.2.11",
 		"koa": "^2.13.4",
 		"koa-bodyparser": "^4.3.0",
