@@ -1,0 +1,21 @@
+kind: Module
+type: container
+name: albatross
+image: albatross
+dockerfile: Dockerfile
+include:
+  - src/
+  - Dockerfile
+  - watch.js
+  - package.json
+  - yarn.lock
+  - tsconfig.json
+  - albatross
+tasks:
+  - name: albatross-install
+    dependencies:
+      - database
+    env:
+      DATABASE_URL: ${var.database.url}
+    args:
+      - install
