@@ -36,7 +36,8 @@ const runMigration = async (migration, intendedVersion) => {
 }
 
 export default async version => {
-	const pattern = program.opts().migrations || process.env.MIGRATION_PATTERN
+	const pattern = program.opts().pattern || process.env.MIGRATION_PATTERN
+	console.log(pattern)
 	const migrations = await getMigrations(pattern)
 	console.log(migrations)
 	for (let migration in migrations) {
