@@ -1,6 +1,6 @@
-import migrations from '../migrations'
+import { getMigrations } from '../migrations'
 
-export default async pattern => {
-	const all = await migrations(pattern)
+export default async (pattern: string) => {
+	const all = await getMigrations(pattern)
 	console.log(all)
 }

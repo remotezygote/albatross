@@ -1,9 +1,9 @@
 import program from './program'
 
-import install from './install'
-import ui from './ui'
-import add from './add'
-import migrate from './migrate'
+import { install } from './install'
+import { ui } from './ui'
+import { add } from './add'
+import { migrate } from './migrate'
 
 program
 	.version('1.0.0')
@@ -17,7 +17,7 @@ const init = async () => {
 		.description('install albatross into a database')
 		.action(install)
 
-	program
+    program
 		.command('ui')
 		.option('-p, --port <port>', 'what port to listen on')
 		.description('start the ui service')

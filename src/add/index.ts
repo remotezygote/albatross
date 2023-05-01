@@ -30,7 +30,7 @@ import { join } from 'path'
 // 	}
 // }
 
-const add =  async (name, location) => {
+export const add =  async (name: string, location: string, includeTest: boolean = false) => {
 	// const pattern = program.opts().migrations || process.env.MIGRATION_PATTERN
 	if (!name) {
 		throw new Error('No name given')
@@ -42,8 +42,7 @@ const add =  async (name, location) => {
 	console.log(`add migration ${name} at ${location} (version: ${version})`)
 	await writeFile(join(location, 'migrations', `${version}.${name}.do.sql`), '')
 	await writeFile(join(location, 'migrations', `${version}.${name}.undo.sql`), '')
+  includeTest && await writeFile(join(location, 'migrations', `${version}.${name}.test.sql`), '')
 }
-
-export default add
 
 // SELECT migrations.addVersion(2, 'init', 'test; check one; check two; select 1;', null, null);

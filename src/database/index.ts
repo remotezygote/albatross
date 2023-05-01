@@ -1,19 +1,15 @@
-import { native } from 'pg'
+import type { QueryResult } from 'pg'
+import * as pg from 'pg'
 import program from '../program'
 
-const { Pool } = native
+const { native } = pg
+const Pool = (native || pg).Pool
 
-let openPool
-const getPool = () => {
-	if (!openPool) {
-		openPool = new Pool({ connectionString: program.opts().database || process.env.DATABASE_URL })
-	}
-	return openPool
-}
+export const connectionString = program.opts().database || process.env.DATABASE_URL
+const pool = new Pool({ connectionString })
 
-export const withDatabaseClient = async (func) => {
+export const withDatabaseClient = async (func: Function) => {
 	try {
-		const pool = getPool()
 		const client = await pool.connect()
 		try {
 			return await func(client)
@@ -25,12 +21,8 @@ export const withDatabaseClient = async (func) => {
 	}
 }
 
-export const query = (text, params = [], callback = undefined) => {
-	const pool = getPool()
-	return pool.query(text, params, callback)
-}
+export const query = pool.query
 
-export const multi = (text) => {
-	const pool = getPool()
-	return pool.query(text)
+export const multi = async (text: string) => {
+	return await pool.query(text) as QueryResult
 }
