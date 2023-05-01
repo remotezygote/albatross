@@ -1,4 +1,3 @@
-export default `
 CREATE SCHEMA migrations;
 
 -- Versions with actual migration code embedded
@@ -234,4 +233,3 @@ CREATE TRIGGER migrations_auto_migrate BEFORE INSERT ON migrations.versions FOR 
 
 SELECT * FROM migrations.addVersion(1, 'init', 'select 1');
 SELECT * from migrations.log(1, 'install'::migrations.migration_log_action, '"your database will migrate itself. feed it."'::jsonb);
-`

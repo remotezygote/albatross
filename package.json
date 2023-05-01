@@ -6,7 +6,7 @@
 	"author": "John Bragg",
 	"license": "MIT",
 	"scripts": {
-		"build": "esbuild src/index.ts --platform=node --external:pg --external:pg-native --bundle --minify --outfile=dist/albatross.js",
+		"build": "esbuild src/index.ts --platform=node --loader:.sql=text --external:pg --external:pg-native --bundle --minify --outfile=dist/albatross.js",
 		"postinstall": "yarn build"
 	},
 	"dependencies": {

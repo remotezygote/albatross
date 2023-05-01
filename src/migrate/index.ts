@@ -12,6 +12,8 @@ const hasRun = async version => {
 	return rows.length > 0
 }
 
+const contentsOf = async action => action ? (await action.getContents()) : null
+
 const runMigration = async (migration, intendedVersion) => {
 	console.log(migration)
 	const { version, actions, name } = migration
@@ -24,7 +26,7 @@ const runMigration = async (migration, intendedVersion) => {
 		// check if hashes match
 		const { do: doAction, undo: undoAction, test: testAction } = actions
 		const text = 'SELECT migrations.addVersion($1, $2, $3, $4, $5)'
-		const values = [version, name, doAction ? (await doAction.getContents()) : null, undoAction ? (await undoAction.getContents()) : null, testAction ? (await testAction.getContents()) : null]
+		const values = [version, name, await contentsOf(doAction), await contentsOf(undoAction), await contentsOf(testAction)]
 
 		runInfo['execution'] = await query(text, values)
 	}

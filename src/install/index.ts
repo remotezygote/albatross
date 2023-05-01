@@ -1,5 +1,7 @@
+/// <reference path="index.d.ts"/>
+
 import { multi, query } from '../database'
-import setupSql from './setup.sql'
+import * as setupSql from './setup.sql'
 
 export default async () => {
 	try {
