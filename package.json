@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "tsc --project tsconfig.json --noEmit",
     "build": "esbuild src/index.ts --platform=node --external:pg --external:pg-native --bundle --minify --outfile=dist/albatross.js",
-    "postinstall:disabled": "yarn build",
+    "postinstall": "yarn build",
     "new": "yarn exec albatross add"
   },
   "dependencies": {

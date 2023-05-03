@@ -1,22 +1,10 @@
-import { multi, query } from '../database'
-import * as glob from 'fast-glob'
+import { query } from '../database'
 import { promises } from 'fs'
 import { join } from 'path'
-import { QueryResult } from 'pg'
-import { getMigrations } from '../migrations'
-
-const { readFile } = promises
+import { migrate } from '../migrate'
 
 export const getSelfMigrations = async () => {
-  const migrations =  await getMigrations(join(__dirname, 'migrations', '*.sql'))
-
-  console.log(migrations)
-
-  return ''
-
-  
-
-  // const data = await readFile("monolitic.txt", "binary")
+  await migrate('0', join(__dirname, 'migrations', '*.sql'), 'albatross')
 }
 
 export const install = async () => {
@@ -25,8 +13,7 @@ export const install = async () => {
 		if (rows.length > 0) {
 			return
 		}
-    const selfMigrations = await getSelfMigrations()
-		await multi(selfMigrations)
+    await migrate('0', join(__dirname, 'migrations', '*.sql'), 'albatross')
 	} catch (e) {
 		console.error(e)
 	}

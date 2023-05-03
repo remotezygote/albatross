@@ -16,11 +16,11 @@ const hasRun = async (version: number, schema: string = 'migrations') => {
 	return rows.length > 0
 }
 
-const runMigration = async (migration: Version, intendedVersion: number, schema: string = 'migrations') => {
+export const runMigration = async (migration: Version, intendedVersion: number, schema: string = 'migrations') => {
 	console.log(migration)
 	const { version, actions, name } = migration
 	// check if already run
-	const migrationHasRun = await hasRun(version)
+	const migrationHasRun = await hasRun(version, schema)
 	console.log('migration has run?', migrationHasRun)
 	const runInfo: RunInfo = {}
 
@@ -39,10 +39,8 @@ const runMigration = async (migration: Version, intendedVersion: number, schema:
 	}
 }
 
-export const migrate = async (target: string, schema: string = 'migrations') => {
+export const migrate = async (target: string, pattern: string = program.opts().pattern || process.env.MIGRATION_PATTERN, schema: string = 'migrations') => {
   const version = parseInt(target)
-	const pattern = program.opts().pattern || process.env.MIGRATION_PATTERN
-	console.log(pattern)
 	const migrations = await getMigrations(pattern)
 	console.log(migrations)
 	for (let migration in migrations) {
