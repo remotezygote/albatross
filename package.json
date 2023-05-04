@@ -6,7 +6,7 @@
   "author": "John Bragg",
   "license": "MIT",
   "scripts": {
-    "lint": "tsc --project tsconfig.json --noEmit",
+    "lint": "tsc src/index.ts --types --noEmit",
     "build": "esbuild src/index.ts --platform=node --external:pg --external:pg-native --bundle --minify --outfile=dist/albatross.js",
     "postinstall": "yarn build",
     "new": "yarn exec albatross add"
