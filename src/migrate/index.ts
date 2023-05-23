@@ -2,6 +2,9 @@ import { getMigrations, Version } from '../migrations'
 import program from '../program'
 import { query } from '../database'
 import { exit } from 'process'
+import debug from 'debug'
+
+const d = debug('albatross:migrate')
 
 const getVersionData = async (version: number) => ({ version })
 
@@ -10,18 +13,18 @@ export type RunInfo = {
 }
 
 const hasRun = async (version: number, schema: string = 'migrations') => {
-	console.log('version has run?', version)
+	d('version has run?', version)
 	const { rows } = await query('select version from $1.versions where version = $2', [schema, version])
-	console.log(rows, rows.length > 0)
+	d(rows, rows.length > 0)
 	return rows.length > 0
 }
 
 export const runMigration = async (migration: Version, intendedVersion: number, schema: string = 'migrations') => {
-	console.log(migration)
+	d('migration: ', migration)
 	const { version, actions, name } = migration
 	// check if already run
 	const migrationHasRun = await hasRun(version, schema)
-	console.log('migration has run?', migrationHasRun)
+	d('migration has run?', migrationHasRun)
 	const runInfo: RunInfo = {}
 
 	if (!migrationHasRun) {
@@ -40,17 +43,20 @@ export const runMigration = async (migration: Version, intendedVersion: number, 
 }
 
 export const migrate = async (target: string, pattern: string = program.opts().pattern || process.env.MIGRATION_PATTERN, schema: string = 'migrations') => {
+	d('pattern: ', pattern)
   const version = parseInt(target)
+	d('version target: ', version)
 	const migrations = await getMigrations(pattern)
-	console.log(migrations)
+	d('migrations: ', migrations)
 	for (let migration in migrations) {
 		try {
       const thisMigration = migrations[migration]
 			const output = await runMigration(thisMigration, version, schema)
-			console.log(JSON.stringify(output, null, '  '))
+			d('output: ', JSON.stringify(output, null, '  '))
 		} catch (e) {
+      d(e)
 			console.error(e)
-			exit(1)
+      throw e
 		}
 	}
 }
