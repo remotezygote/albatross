@@ -1,8 +1,8 @@
-import { native } from 'pg'
+import pg, { native } from 'pg'
 import program from '../program'
 import debug from 'debug'
 
-const { Pool } = native
+const { Pool } = process.env.USE_NATIVE_PG === 'false' ? pg : native
 
 const d = debug('albatross:database')
 
