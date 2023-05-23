@@ -4,7 +4,7 @@ import { query } from '../database'
 import { exit } from 'process'
 import debug from 'debug'
 
-const d = debug('migrate')
+const d = debug('albatross:migrate')
 
 const getVersionData = async version => ({ version })
 

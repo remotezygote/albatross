@@ -1,12 +1,16 @@
 import { native } from 'pg'
 import program from '../program'
+import debug from 'debug'
 
 const { Pool } = native
 
+const d = debug('albatross:database')
+
 let openPool
 const getPool = () => {
-	if (!openPool) {
-		openPool = new Pool({ connectionString: program.opts().database || process.env.DATABASE_URL })
+	if (!openPool) {		
+    d('connecting: ', program.opts().database || process.env.DATABASE_URL)
+    openPool = new Pool({ connectionString: program.opts().database || process.env.DATABASE_URL })
 	}
 	return openPool
 }

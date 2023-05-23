@@ -2,7 +2,7 @@ import { multi, query } from '../database'
 import setupSql from './setup.sql'
 import debug from 'debug'
 
-const d = debug('install')
+const d = debug('albatross:install')
 
 export default async () => {
 	try {
