@@ -2,22 +2,25 @@ import getMigrations from '../migrations'
 import program from '../program'
 import { query } from '../database'
 import { exit } from 'process'
+import debug from 'debug'
+
+const d = debug('migrate')
 
 const getVersionData = async version => ({ version })
 
 const hasRun = async version => {
-	console.log('version has run?', version)
+	d('version has run?', version)
 	const { rows } = await query('select version from migrations.versions where version = $1', [version])
-	console.log(rows, rows.length > 0)
+	d('has run?', rows.length > 0)
 	return rows.length > 0
 }
 
 const runMigration = async (migration, intendedVersion) => {
-	console.log(migration)
+	d(migration)
 	const { version, actions, name } = migration
 	// check if already run
 	const migrationHasRun = await hasRun(version)
-	console.log('migration has run?', migrationHasRun)
+	d('migration has run?', migrationHasRun)
 	const runInfo = {}
 
 	if (!migrationHasRun) {
@@ -37,16 +40,16 @@ const runMigration = async (migration, intendedVersion) => {
 
 export default async version => {
 	const pattern = program.opts().pattern || process.env.MIGRATION_PATTERN
-	console.log(pattern)
+	d('pattern: ', pattern)
 	const migrations = await getMigrations(pattern)
-	console.log(migrations)
+	d('migrations: ', migrations)
 	for (let migration in migrations) {
 		try {
 			const output = await runMigration(migrations[migration], version)
-			console.log(JSON.stringify(output, null, '  '))
+			d('output: ', JSON.stringify(output, null, '  '))
 		} catch (e) {
 			console.error(e)
-			exit(1)
+      throw e
 		}
 	}
 }
