@@ -4,7 +4,7 @@ import debug from 'debug'
 
 const d = debug('albatross:database')
 
-d('use native pg?', process.env.USE_NATIVE_PG !== 'false')
+d('use native pg?', process.env.USE_NATIVE_PG !== 'false', process.env.USE_NATIVE_PG, typeof process.env.USE_NATIVE_PG)
 const { Pool } = process.env.USE_NATIVE_PG === 'false' ? pg : pg.native
 
 let openPool
@@ -32,6 +32,7 @@ export const withDatabaseClient = async (func) => {
 
 export const query = (text, params = [], callback = undefined) => {
 	const pool = getPool()
+  d('got pool: ', pool)
 	return pool.query(text, params, callback)
 }
 
