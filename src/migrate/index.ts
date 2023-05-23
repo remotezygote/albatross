@@ -45,9 +45,10 @@ export default async version => {
 	d('migrations: ', migrations)
 	for (let migration in migrations) {
 		try {
-			const output = await runMigration(migrations[migration], version)
-			d('output: ', JSON.stringify(output, null, '  '))
+      d('running migration: ', migrations[migration].version, migrations[migration].name)
+			await runMigration(migrations[migration], version)
 		} catch (e) {
+      d(e)
 			console.error(e)
       throw e
 		}
