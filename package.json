@@ -16,7 +16,6 @@
     "commander": "^9.4.0",
     "debug": "^4.3.4",
     "env-pino": "^1.0.1",
-    "esbuild": "^0.14.54",
     "fast-glob": "^3.2.11",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
