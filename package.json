@@ -1,47 +1,52 @@
 {
-	"name": "@remotezygote/albatross",
-	"version": "1.0.0",
-	"description": "Migrator",
-	"main": "dist/albatross.js",
-	"author": "John Bragg",
-	"license": "MIT",
-	"scripts": {
-		"build": "esbuild src/index.ts --platform=node --external:pg --external:pg-native --bundle --minify --outfile=dist/albatross.js",
-		"postinstall": "yarn build"
-	},
-	"dependencies": {
-		"@koa/router": "^12.0.0",
-		"commander": "^9.4.0",
-		"env-pino": "^1.0.1",
-		"esbuild": "^0.14.54",
-		"fast-glob": "^3.2.11",
-		"koa": "^2.13.4",
-		"koa-bodyparser": "^4.3.0",
-		"koa-mount": "^4.0.0",
-		"koa-pino-logger": "^4.0.0",
-		"koa-static": "^5.0.0",
-		"pg": "^8.8.0",
-		"pg-native": "^3.0.1"
-	},
-	"devDependencies": {
-		"@types/koa": "^2.13.5",
-		"@types/koa-router": "^7.4.4",
-		"@types/node": "^18.7.14",
-		"dotenv": "^16.0.2",
-		"typescript": "^4.8.2"
-	},
-	"files": [
-		"./dist",
-		"albatross"
-	],
-	"bin": {
-		"albatross": "./albatross"
-	},
-	"nodemonConfig": {
-		"watch": [
-			"watch.js",
-			"yarn.lock"
-		],
-		"exec": "yarn && node watch.js | npx pino-colada"
-	}
+  "name": "@remotezygote/albatross",
+  "version": "1.0.1",
+  "description": "Migrator",
+  "main": "dist/main.js",
+  "module": "dist/module.js",
+  "source": "src/index.ts",
+  "author": "John Bragg",
+  "license": "MIT",
+  "scripts": {
+    "build": "parcel build",
+    "prepare": "yarn build"
+  },
+  "dependencies": {
+    "@koa/router": "^12.0.0",
+    "commander": "^9.4.0",
+    "debug": "^4.3.4",
+    "env-pino": "^1.0.1",
+    "esbuild": "^0.14.54",
+    "fast-glob": "^3.2.11",
+    "koa": "^2.13.4",
+    "koa-bodyparser": "^4.3.0",
+    "koa-mount": "^4.0.0",
+    "koa-pino-logger": "^4.0.0",
+    "koa-static": "^5.0.0",
+    "pg": "^8.8.0",
+    "pg-native": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.5",
+    "@types/koa-router": "^7.4.4",
+    "@types/node": "^18.7.14",
+    "dotenv": "^16.0.2",
+    "parcel": "^2.9.2",
+    "standard-version": "^9.5.0",
+    "typescript": "^4.8.2"
+  },
+  "files": [
+    "./dist",
+    "albatross"
+  ],
+  "bin": {
+    "albatross": "./albatross"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "watch.js",
+      "yarn.lock"
+    ],
+    "exec": "yarn && node watch.js | npx pino-colada"
+  }
 }
