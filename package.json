@@ -47,5 +47,8 @@
       "yarn.lock"
     ],
     "exec": "yarn && node watch.js | npx pino-colada"
+  },
+  "engines": {
+    "node": ">= 12"
   }
 }
