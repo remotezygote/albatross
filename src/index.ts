@@ -8,7 +8,6 @@ import { migrate } from './migrate'
 program
 	.version('1.0.0')
 	.description('The in-database migrator for postgresql')
-	.option('-d, --database, --db <database_url>', 'database url to connect to')
 	.option('-p, --pattern <migration_pattern>', 'where to find migrations')
 
 const init = async () => {
@@ -17,7 +16,7 @@ const init = async () => {
 		.description('install albatross into a database')
 		.action(install)
 
-    program
+  program
 		.command('ui')
 		.option('-p, --port <port>', 'what port to listen on')
 		.description('start the ui service')

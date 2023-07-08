@@ -1,8 +1,8 @@
+import { query } from '@remotezygote/database'
+import debug from 'debug'
+
 import { getMigrations, Version } from '../migrations'
 import program from '../program'
-import { query } from '../database'
-import { exit } from 'process'
-import debug from 'debug'
 
 const d = debug('albatross:migrate')
 
