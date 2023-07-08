@@ -51,6 +51,7 @@ export const migrate = async (target: string, pattern: string = program.opts().p
 	for (let migration in migrations) {
 		try {
       const thisMigration = migrations[migration]
+      d('running migration: ', thisMigration.version, thisMigration.name)
 			const output = await runMigration(thisMigration, version, schema)
 			d('output: ', JSON.stringify(output, null, '  '))
 		} catch (e) {
