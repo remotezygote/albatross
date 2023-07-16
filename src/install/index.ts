@@ -5,7 +5,14 @@ import { query } from '@remotezygote/database'
 
 const d = debug('albatross:install')
 
-const selfMigrationsDir = join(__dirname, 'migrations', '*.sql')
+const selfMigrationsDir = join(
+  __dirname,
+  '..',
+  'src',
+  'install',
+  'migrations',
+  '*.sql'
+)
 
 const hasRun = async (version: number) => {
   d('version has run?', version)
