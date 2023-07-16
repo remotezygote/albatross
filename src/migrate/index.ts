@@ -34,6 +34,7 @@ export const runMigration = async (
   const migrationHasRun = await hasRun(version)
   d('migration has run?', migrationHasRun)
   const runInfo: RunInfo = {}
+  let success = true
 
   if (!migrationHasRun) {
     // check if hashes match
@@ -46,18 +47,32 @@ export const runMigration = async (
       undoAction ? await undoAction.getContents() : null,
       testAction ? await testAction.getContents() : null
     ]
+    const messages: string[] = []
     await withDatabaseClient(async (client: Client) => {
-      client.on('notice', msg => console.log(msg.message))
-      runInfo['execution'] = await client.query(text, values)
+      client.on('notice', msg => msg.message && messages.push(msg.message))
+      client.on('error', err => {
+        console.error('something bad has happened!', err.message)
+        success = false
+      })
+      try {
+        runInfo['execution'] = await client.query(text, values)
+      } catch (err) {
+        console.debug('something bad has happened!', (err as Error).message)
+        success = false
+      }
     })
-    console.log(` ✔ ${version} ${name.replace(/[_-]/g, ' ')}`)
+    console.log(
+      ` ${success ? '✔' : '✘'} ${version} ${name.replace(/[_-]/g, ' ')}`
+    )
+    messages.forEach(msg => console.log(msg))
   } else {
     console.log(` - ${version} ${name.replace(/[_-]/g, ' ')}`)
   }
 
   return {
     ...(await getVersionData(version)),
-    ...runInfo
+    ...runInfo,
+    success
   }
 }
 
@@ -82,6 +97,10 @@ export const migrate = async (
       const thisMigration = migrations[migration]
       d('running migration: ', thisMigration.version, thisMigration.name)
       const output = await runMigration(thisMigration, version)
+      if (!output.success) {
+        console.log(' ✘ Error!')
+        return
+      }
       d('output: ', JSON.stringify(output, null, '  '))
     } catch (e) {
       d(e)

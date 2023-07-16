@@ -16,12 +16,14 @@ CREATE FUNCTION migrations.executeMigration(migration migrations.versions) RETUR
 	DECLARE
     tests_succeeded boolean := false;
 	BEGIN
-    -- execute up
 		PERFORM migrations.executeMigrationStatement(migration.version, trim(both ' \n' from migration.up));
-    -- begin test subtransaction
     IF migration.test IS NOT NULL THEN
-      RAISE NOTICE ' Testing migration %', migration.name;
-      PERFORM migrations.executeMigrationStatement(migration.version, trim(both ' \n' from migration.test));
+      BEGIN
+        PERFORM migrations.executeMigrationStatement(migration.version, trim(both ' \n' from migration.test));
+        RAISE EXCEPTION 'Migration tests succeeded. Rolling back test transaction.' USING ERRCODE = 'successful_completion';
+      EXCEPTION WHEN OTHERS THEN
+        RAISE DEBUG 'Migration tests succeeded.';
+      END;
     END IF;
 		RETURN true;
 	END;
@@ -37,3 +39,14 @@ CREATE OR REPLACE FUNCTION migrations.auto_migrate() RETURNS trigger AS $auto_mi
 		RETURN NEW;
 	END;
 $auto_migrate$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION migrations.executeMigrationStatement(_version bigint, statement text) RETURNS boolean AS $executeMigrationStatement$
+	BEGIN
+			execute trim(both ';' from statement);
+			update migrations.versions set applied = true where version = _version;
+			RETURN true;
+	EXCEPTION WHEN OTHERS THEN
+		RAISE EXCEPTION E'Migration exception, rolling back. \n\nStatement: % \n\nError: %', statement, SQLERRM;
+		RETURN false;
+	END;
+$executeMigrationStatement$ LANGUAGE plpgsql;

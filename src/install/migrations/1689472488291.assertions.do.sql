@@ -7,7 +7,7 @@ CREATE FUNCTION assertions.equal(reported anyelement, expected anyelement, msg t
       RETURN;
     END IF;
     RAISE NOTICE '   ✘ FAIL - % - % = %', msg, reported, expected;
-    RAISE EXCEPTION '% - % = %', msg, reported, expected USING ERRCODE = 'failed_assertion';
+    RAISE EXCEPTION '% - % = %', msg, reported, expected USING ERRCODE = 'assert_failure';
   END;
 $Equal$ LANGUAGE plpgsql;
 
@@ -18,7 +18,7 @@ CREATE FUNCTION assertions.ne(reported anyelement, expected anyelement, msg text
       RETURN;
     END IF;
     RAISE NOTICE '   ✘ FAIL - % - % != %', msg, reported, expected;
-    RAISE EXCEPTION '% - % != %', msg, reported, expected USING ERRCODE = 'failed_assertion';
+    RAISE EXCEPTION '% - % != %', msg, reported, expected USING ERRCODE = 'assert_failure';
   END;
 $Equal$ LANGUAGE plpgsql;
 
@@ -29,7 +29,7 @@ CREATE FUNCTION assertions.gt(reported anyelement, expected anyelement, msg text
       RETURN;
     END IF;
     RAISE NOTICE '   ✘ FAIL - % - % > %', msg, reported, expected;
-    RAISE EXCEPTION '% - % > %', msg, reported, expected USING ERRCODE = 'failed_assertion';
+    RAISE EXCEPTION '% - % > %', msg, reported, expected USING ERRCODE = 'assert_failure';
   END;
 $Equal$ LANGUAGE plpgsql;
 
@@ -40,6 +40,6 @@ CREATE FUNCTION assertions.lt(reported anyelement, expected anyelement, msg text
       RETURN;
     END IF;
     RAISE NOTICE '   ✘ FAIL - % - % < %', msg, reported, expected;
-    RAISE EXCEPTION '% - % < %', msg, reported, expected USING ERRCODE = 'failed_assertion';
+    RAISE EXCEPTION '% - % < %', msg, reported, expected USING ERRCODE = 'assert_failure';
   END;
 $Equal$ LANGUAGE plpgsql;
