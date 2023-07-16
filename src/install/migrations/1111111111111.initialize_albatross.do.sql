@@ -1,5 +1,3 @@
-CREATE SCHEMA migrations;
-
 -- Versions with actual migration code embedded
 CREATE TABLE migrations.versions (
 	version bigint PRIMARY KEY,

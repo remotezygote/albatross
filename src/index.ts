@@ -30,7 +30,7 @@ const init = async () => {
 	program
 		.command('migrate [version]')
 		.description('migrate the database')
-		.action(migrate)
+		.action(version => migrate(version))
 
 	program
 		.command('rollback <version>')
