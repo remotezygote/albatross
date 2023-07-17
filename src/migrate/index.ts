@@ -1,10 +1,11 @@
-import { pool, query, withDatabaseClient } from '@remotezygote/database'
+import { query, withDatabaseClient } from '@remotezygote/database'
 import debug from 'debug'
 
 import { getMigrations, Version } from '../migrations'
 import program from '../program'
 import { install } from '../install'
 import { Client } from 'pg'
+import { NoticeMessage } from 'pg-protocol/dist/messages'
 
 const d = debug('albatross:migrate')
 
@@ -49,16 +50,22 @@ export const runMigration = async (
     ]
     const messages: string[] = []
     await withDatabaseClient(async (client: Client) => {
-      client.on('notice', msg => msg.message && messages.push(msg.message))
-      client.on('error', err => {
+      const onNotice = (msg: NoticeMessage) =>
+        msg.message && messages.push(msg.message)
+      const onError = (err: Error) => {
         console.error('something bad has happened!', err.message)
         success = false
-      })
+      }
       try {
+        client.on('notice', onNotice)
+        client.on('error', onError)
         runInfo['execution'] = await client.query(text, values)
       } catch (err) {
         console.debug('something bad has happened!', (err as Error).message)
         success = false
+      } finally {
+        client.off('notice', onNotice)
+        client.off('error', onError)
       }
     })
     console.log(

@@ -2,8 +2,8 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"target": "es6",
-		"module": "nodenext",
-		"moduleResolution": "nodenext",
+		"module": "commonjs",
+		"moduleResolution": "node",
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
@@ -16,7 +16,7 @@
 	},
 	"include": [
 		"src/**/*.ts*"
-	],
+, "src/migrate/index.ts"	],
 	"exclude": [
 		"node_modules/",
 		"**/*.spec.ts"
