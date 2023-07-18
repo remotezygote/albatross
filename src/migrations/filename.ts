@@ -1,6 +1,6 @@
 import { basename } from 'path'
 
-const filename = path => {
+const filename = (path: string) => {
 	const filename = basename(path, '.sql')
 	const parts = filename.split('.')
 	if (parts.length === 3) {

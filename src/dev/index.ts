@@ -1,11 +1,16 @@
-import getMigrations from '../migrations'
-import { get, start } from '../app'
+import { getMigrations } from '../migrations'
+import { get, start } from '@remotezygote/koa-api-app'
 import program from '../program'
+import { Context } from 'koa'
 
-const dev = opts => {
+type UIOptions = {
+  port?: number | string
+}
+
+const dev = (opts: UIOptions) => {
 		// watch files by pattern
 		// remigrate as needed based on changes
-	get('/migrations', async ctx => {
+	get('/migrations', async (ctx: Context) => {
 		const pattern = program.opts().migrations || process.env.MIGRATION_PATTERN
 		const migrations = await getMigrations(pattern)
 		ctx.body = migrations

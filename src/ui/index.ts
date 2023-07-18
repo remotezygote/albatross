@@ -1,20 +1,24 @@
-import getMigrations from '../migrations'
-import { get, serveAt, start } from '../app'
+import { getMigrations } from '../migrations'
+import { get, start } from '@remotezygote/koa-api-app'
 import program from '../program'
-import { query } from '../database'
+import { query } from '@remotezygote/database'
+import { Context } from 'koa'
 
-export default opts => {
-	serveAt('./client', '/assets')
+type UIOptions = {
+  port?: number | string
+}
 
-	get('/migrations', async ctx => {
+export const ui = (opts: UIOptions) => {
+	// serveAt('./client', '/assets')
+
+	get('/migrations', async (ctx: Context) => {
 		const pattern = program.opts().pattern || process.env.MIGRATION_PATTERN
 		const migrations = await getMigrations(pattern)
-		ctx.body = JSON.stringify(migrations, null, '  ')
+		ctx.body = migrations
 	})
 	
-	get('/log', async ctx => {
+	get('/log', async (ctx: Context) => {
 		const logEntries = await query('select * from migrations.log')
-		console.log(logEntries)
 		ctx.body = logEntries
 	})
 	

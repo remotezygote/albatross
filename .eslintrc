@@ -1,0 +1,72 @@
+{
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": { 
+    "project": true
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "file-progress",
+    "prettier",
+    "simple-import-sort",
+    "import"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "ignorePatterns": ["lib/schema", "public"],
+  "rules": {
+    "semi": [1, "never"],
+    "prettier/prettier": 2 ,
+    "file-progress/activate": 1,
+    "@typescript-eslint/ban-ts-comment": 1,
+    "@typescript-eslint/no-floating-promises": "error", /* TODO: add plugin:@typescript-eslint/recommended-requiring-type-checking */
+    "simple-import-sort/imports": [
+      "error",
+      {
+        "groups": [
+          // Packages `react` related packages come first.
+          ["^react", "^@?\\w"],
+          // Internal packages.
+          ["^(@getarch)(/.*|$)"],
+          ["^(@api)(/.*|$)"],
+          // Side effect imports.
+          ["^\\u0000"],
+          // Parent imports. Put `..` last.
+          ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+          // Other relative imports. Put same-folder imports and `.` last.
+          ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+          // Style imports.
+          ["^.+\\.?(css)$"]
+        ]
+      }
+    ],
+    "simple-import-sort/exports": "error",
+    "import/no-default-export": "error"
+  },
+  "overrides": [
+    {
+      "files": ["**/__tests__/**", "**/*.test.*"],
+      "plugins": ["jest"],
+      "extends": ["plugin:jest/recommended", "plugin:jest/style"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": 0,
+        "jest/no-disabled-tests": "error",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/prefer-expect-assertions": [
+          "error",
+          { "onlyFunctionsWithAsyncKeyword": true }
+        ],
+        "jest/prefer-to-have-length": "warn",
+        "jest/valid-expect": "error"
+      }
+    }
+  ]
+}

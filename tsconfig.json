@@ -1,26 +1,24 @@
 {
 	"compilerOptions": {
 		"baseUrl": ".",
-		"target": "es2015",
+		"target": "es6",
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
-		"strict": false,
+		"strict": true,
 		"outDir": "./dist",
 		"sourceMap": true,
-		"paths": {
-			"@warder/*": [
-				"../../api/lib/*"
-			]
-		}
+		"preserveConstEnums": true,
+		"noEmit": true,
+    "types": []
 	},
 	"include": [
-		"./src"
-	],
+		"src/**/*.ts*"
+, "src/migrate/index.ts"	],
 	"exclude": [
-		"node_modules",
+		"node_modules/",
 		"**/*.spec.ts"
 	]
 }
