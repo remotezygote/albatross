@@ -9,18 +9,18 @@ type UIOptions = {
 }
 
 export const ui = (opts: UIOptions) => {
-	// serveAt('./client', '/assets')
+  // serveAt('./client', '/assets')
 
-	get('/migrations', async (ctx: Context) => {
-		const pattern = program.opts().pattern || process.env.MIGRATION_PATTERN
-		const migrations = await getMigrations(pattern)
-		ctx.body = migrations
-	})
-	
-	get('/log', async (ctx: Context) => {
-		const logEntries = await query('select * from migrations.log')
-		ctx.body = logEntries
-	})
-	
-	start(opts.port || process.env.PORT || 5858)
+  get('/migrations', async (ctx: Context) => {
+    const pattern = program.opts().pattern || process.env.MIGRATION_PATTERN
+    const migrations = await getMigrations(pattern)
+    ctx.body = migrations
+  })
+
+  get('/log', async (ctx: Context) => {
+    const logEntries = await query('select * from migrations.log')
+    ctx.body = logEntries
+  })
+
+  start(opts.port || process.env.PORT || 5858)
 }

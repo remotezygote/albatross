@@ -106,7 +106,7 @@ export const migrate = async (
       const output = await runMigration(thisMigration, version)
       if (!output.success) {
         console.log(' ✘ Error!')
-        return
+        process.exit(1)
       }
       d('output: ', JSON.stringify(output, null, '  '))
     } catch (e) {

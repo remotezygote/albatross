@@ -12,11 +12,12 @@
 		"sourceMap": true,
 		"preserveConstEnums": true,
 		"noEmit": true,
-    "types": []
+		"types": []
 	},
 	"include": [
-		"src/**/*.ts*"
-, "src/migrate/index.ts"	],
+		"src/**/*.ts*",
+		"src/migrate/index.ts"
+	],
 	"exclude": [
 		"node_modules/",
 		"**/*.spec.ts"
