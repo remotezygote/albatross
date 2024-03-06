@@ -11,33 +11,38 @@ program
   .option('-p, --pattern <migration_pattern>', 'where to find migrations')
 
 const init = async () => {
-  program
-    .command('install')
-    .description('install albatross into a database')
-    .action(install)
+  try {
+    program
+      .command('install')
+      .description('install albatross into a database')
+      .action(install)
 
-  program
-    .command('ui')
-    .option('-p, --port <port>', 'what port to listen on')
-    .description('start the ui service')
-    .action(ui)
+    program
+      .command('ui')
+      .option('-p, --port <port>', 'what port to listen on')
+      .description('start the ui service')
+      .action(ui)
 
-  program
-    .command('add [name] [location]')
-    .description('add a migration')
-    .action(add)
+    program
+      .command('add [name] [location]')
+      .description('add a migration')
+      .action(add)
 
-  program
-    .command('migrate [version]')
-    .description('migrate the database')
-    .action(version => migrate(version))
+    program
+      .command('migrate [version]')
+      .description('migrate the database')
+      .action(version => migrate(version))
 
-  program
-    .command('rollback <version>')
-    .description('migrate the database')
-    .action(() => {})
+    program
+      .command('rollback <version>')
+      .description('migrate the database')
+      .action(() => {})
 
-  program.parse(process.argv)
+    program.parse(process.argv)
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
 }
 
 init()
