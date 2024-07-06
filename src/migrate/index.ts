@@ -4,6 +4,8 @@ import debug from 'debug'
 import { getMigrations, Version } from '../migrations'
 import program from '../program'
 import { install } from '../install'
+import { reportError, errors } from '../error'
+
 import { Client } from 'pg'
 import { NoticeMessage } from 'pg-protocol/dist/messages'
 
@@ -100,19 +102,26 @@ export const migrate = async (
   const migrations = await getMigrations(pattern)
   d('migrations: ', migrations)
   for (let migration in migrations) {
-    try {
-      const thisMigration = migrations[migration]
-      d('running migration: ', thisMigration.version, thisMigration.name)
-      const output = await runMigration(thisMigration, version)
-      if (!output.success) {
-        console.log(' ✘ Error!')
-        process.exit(1)
+    const thisMigration = migrations[migration]
+    if (!errors.length) {
+      try {
+        d('running migration: ', thisMigration.version, thisMigration.name)
+        const output = await runMigration(thisMigration, version)
+        if (!output.success) {
+          console.log(' ✘ Error!')
+          process.exit(1)
+        }
+        d('output: ', JSON.stringify(output, null, '  '))
+      } catch (e) {
+        d(e)
+        reportError(e as Error)
       }
-      d('output: ', JSON.stringify(output, null, '  '))
-    } catch (e) {
-      d(e)
-      console.error(e)
-      throw e
+    } else {
+      d(
+        'skipped migration due to errors: ',
+        thisMigration.version,
+        thisMigration.name
+      )
     }
   }
   console.log(' ✔ Done!')

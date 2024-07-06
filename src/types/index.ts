@@ -1,7 +1,18 @@
 import * as zg from 'zapatos/generate'
+import program from '../program'
+import { dirname, resolve } from 'path'
 
-const zapCfg: zg.Config = { db: { connectionString: 'postgres://localhost/mydb' } };
+type LocalZapCfg = (pattern?: string) => zg.Config
 
-export const generateTypes = async () => {
-  await zg.generate(zapCfg)
+const zapCfg: LocalZapCfg = (
+  pattern: string | undefined = program.opts().pattern ||
+    process.env.MIGRATION_PATTERN ||
+    'migrations/*.sql'
+) => ({
+  outDir: resolve('.', dirname(pattern)),
+  db: { connectionString: process.env.DATABASE_URL }
+})
+
+export const generateTypes = async (pattern?: string) => {
+  return await zg.generate(zapCfg(pattern))
 }

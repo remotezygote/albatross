@@ -5,13 +5,13 @@ import { ui } from './ui'
 import { add } from './add'
 import { migrate } from './migrate/index.js'
 
-program
-  .version('1.0.0')
-  .description('The in-database migrator for postgresql')
-  .option('-p, --pattern <migration_pattern>', 'where to find migrations')
-
 const init = async () => {
   try {
+    program
+      .version('1.0.0')
+      .description('The in-database migrator for postgresql')
+      .option('-p, --pattern <migration_pattern>', 'where to find migrations')
+
     program
       .command('install')
       .description('install albatross into a database')
@@ -19,7 +19,7 @@ const init = async () => {
 
     program
       .command('ui')
-      .option('-p, --port <port>', 'what port to listen on')
+      .option('--port <port>', 'what port to listen on')
       .description('start the ui service')
       .action(ui)
 
@@ -35,14 +35,22 @@ const init = async () => {
 
     program
       .command('rollback <version>')
-      .description('migrate the database')
+      .description('roll back the database')
       .action(() => {})
+
+    program.exitOverride()
 
     program.parse(process.argv)
   } catch (e) {
+    console.error('something bad has happened!', (e as Error).message)
     console.error(e)
     throw e
   }
 }
 
-init()
+try {
+  init()
+} catch (e) {
+  console.error(e)
+  process.exit(1)
+}

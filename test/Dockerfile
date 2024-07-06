@@ -1,4 +1,4 @@
-FROM node:19.9.0-bullseye-slim
+FROM node:lts-bullseye-slim
 
 RUN apt-get -y update && \
   apt-get install wget sudo curl gnupg2 lsb-release -y && \
