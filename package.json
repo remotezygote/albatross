@@ -6,7 +6,13 @@
   "source": "./src/index.ts",
   "author": "John Bragg",
   "license": "MIT",
+  "types": "./dist/index.d.ts",
   "type": "module",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "require": "./dist/index.cjs",
+    "import": "./dist/index.mjs"
+  },
   "engines": {
     "node": ">=14.0.0"
   },
@@ -15,20 +21,23 @@
     "test": "docker build -f test/Dockerfile -t albatross-test . && docker run --rm albatross-test || docker image rm albatross-test",
     "build": "nanobundle build --tsconfig=./tsconfig.json --platform=node --out-dir=./dist --clean",
     "prepare": "yarn build",
-    "new": "node albatross.js add"
+    "new": "node dist/index.cjs add"
   },
   "dependencies": {
-    "@remotezygote/database": "^1.2.12",
-    "@remotezygote/koa-api-app": "^1.0.38",
+    "@remotezygote/database": "^1.2.14",
+    "@remotezygote/koa-api-app": "^1.0.40",
     "colors": "^1.4.0",
     "commander": "^12.1.0",
     "debug": "^4.3.5",
     "fast-glob": "^3.3.2",
+    "kanel": "^3.9.0",
+    "koa": "^2.15.3",
     "pg-protocol": "^1.6.1",
     "zapatos": "^6.4.2"
   },
   "devDependencies": {
     "@types/debug": "^4.1.12",
+    "@types/koa": "^2.15.0",
     "@types/node": "^20.14.10",
     "@types/pg": "^8.10.6",
     "dotenv": "^16.4.5",
@@ -50,7 +59,7 @@
     "albatross"
   ],
   "bin": {
-    "albatross": "./albatross.js"
+    "albatross": "./dist/index.cjs"
   },
   "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }

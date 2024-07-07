@@ -44,6 +44,8 @@ const init = async () => {
       .description('roll back the database')
       .action(() => {})
 
+    program.showSuggestionAfterError(true)
+
     program.parse(process.argv)
   } catch (e) {
     console.error('something bad has happened!', (e as Error).message)
