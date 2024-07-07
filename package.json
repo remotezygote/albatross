@@ -1,6 +1,6 @@
 {
   "name": "@remotezygote/albatross",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Migrator",
   "main": "./dist/index.js",
   "source": "./src/index.ts",
@@ -21,6 +21,7 @@
     "test": "docker build -f test/Dockerfile -t albatross-test . && docker run --rm albatross-test || docker image rm albatross-test",
     "build": "nanobundle build --tsconfig=./tsconfig.json --platform=node --out-dir=./dist --clean",
     "prepare": "yarn build",
+    "release": "standard-version",
     "new": "node dist/index.cjs add"
   },
   "dependencies": {
