@@ -4,7 +4,7 @@ import { createHash } from 'crypto'
 
 const { readFile } = promises
 
-import parseFilename from './filename'
+import parseFilename from './filename.ts'
 
 export type Action = {
   path: string

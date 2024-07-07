@@ -1,8 +1,8 @@
 import { generate, Config } from 'zapatos/generate'
 
-import program from '../program'
+import program from '../program/index.ts'
 import { dirname, resolve } from 'path'
-import { reportError, exitWithErrors } from '../error'
+import { reportError, exitWithErrors } from '../error/index.ts'
 
 interface ZapOptions {
   pattern?: string

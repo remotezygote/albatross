@@ -1,13 +1,13 @@
 import { query, withDatabaseClient } from '@remotezygote/database'
 import debug from 'debug'
 
-import { getMigrations, Version } from '../migrations'
-import program from '../program'
-import { install } from '../install'
-import { reportError, errors, exitWithErrors } from '../error'
+import { getMigrations, Version } from '../migrations/index.ts'
+import program from '../program/index.ts'
+import { install } from '../install/index.ts'
+import { reportError, errors, exitWithErrors } from '../error/index.ts'
 
 import { Client } from 'pg'
-import { NoticeMessage } from 'pg-protocol/dist/messages'
+import { NoticeMessage } from 'pg-protocol/dist/messages.js'
 
 const d = debug('albatross:migrate')
 

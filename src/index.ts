@@ -1,10 +1,10 @@
-import program from './program'
+import program from './program/index.ts'
 
-import { install } from './install'
-import { ui } from './ui'
-import { add } from './add'
-import { migrate } from './migrate/index.js'
-import { types } from './types'
+import { install } from './install/index.ts'
+import { ui } from './ui/index.ts'
+import { add } from './add/index.ts'
+import { migrate } from './migrate/index.ts'
+import { types } from './types/index.ts'
 
 const init = async () => {
   try {
@@ -43,8 +43,6 @@ const init = async () => {
       .command('rollback <version>')
       .description('roll back the database')
       .action(() => {})
-
-    // program.exitOverride()
 
     program.parse(process.argv)
   } catch (e) {

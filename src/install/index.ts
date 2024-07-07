@@ -1,5 +1,5 @@
 import { join } from 'path'
-import { Version, getMigrations } from '../migrations'
+import { Version, getMigrations } from '../migrations/index.ts'
 import debug from 'debug'
 import { query } from '@remotezygote/database'
 

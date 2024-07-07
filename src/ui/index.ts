@@ -1,6 +1,6 @@
-import { getMigrations } from '../migrations'
+import { getMigrations } from '../migrations/index.ts'
 import { get, start } from '@remotezygote/koa-api-app'
-import program from '../program'
+import program from '../program/index.ts'
 import { query } from '@remotezygote/database'
 import { Context } from 'koa'
 

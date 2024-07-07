@@ -6,11 +6,12 @@
   "source": "./src/index.ts",
   "author": "John Bragg",
   "license": "MIT",
+  "type": "module",
   "engines": {
     "node": ">=14.0.0"
   },
   "scripts": {
-    "lint": "tsc src/index.ts --noEmit",
+    "lint": "tsc --project tsconfig.json --noEmit",
     "test": "docker build -f test/Dockerfile -t albatross-test . && docker run --rm albatross-test || docker image rm albatross-test",
     "build": "nanobundle build --tsconfig=./tsconfig.json --platform=node --out-dir=./dist --clean",
     "prepare": "yarn build",
@@ -18,11 +19,12 @@
   },
   "dependencies": {
     "@remotezygote/database": "^1.2.12",
-    "@remotezygote/koa-api-app": "^1.0.37",
+    "@remotezygote/koa-api-app": "^1.0.38",
     "colors": "^1.4.0",
     "commander": "^12.1.0",
     "debug": "^4.3.5",
     "fast-glob": "^3.3.2",
+    "pg-protocol": "^1.6.1",
     "zapatos": "^6.4.2"
   },
   "devDependencies": {

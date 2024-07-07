@@ -1,7 +1,7 @@
 import { writeFile } from 'fs/promises'
 import { join } from 'path'
 
-import { reportError, errors } from '../error'
+import { reportError, errors } from '../error/index.ts'
 import { blue, green, rainbow, random, red, trap, yellow } from 'colors'
 
 export const add = async (
