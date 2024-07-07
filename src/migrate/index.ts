@@ -4,7 +4,7 @@ import debug from 'debug'
 import { getMigrations, Version } from '../migrations'
 import program from '../program'
 import { install } from '../install'
-import { reportError, errors } from '../error'
+import { reportError, errors, exitWithErrors } from '../error'
 
 import { Client } from 'pg'
 import { NoticeMessage } from 'pg-protocol/dist/messages'
@@ -124,5 +124,5 @@ export const migrate = async (
       )
     }
   }
-  console.log(' ✔ Done!')
+  exitWithErrors()
 }

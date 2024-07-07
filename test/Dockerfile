@@ -31,10 +31,10 @@ WORKDIR /build
 
 COPY . .
 
-RUN yarn && yarn global add file:/build
+RUN yarn && yarn build
 
 WORKDIR /albatross
 
 COPY test/ .
 
-CMD ["albatross", "migrate"]
+CMD node /build/dist/index.js migrate ; node /build/dist/index.js types ; ls -la

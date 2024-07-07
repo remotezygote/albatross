@@ -33,7 +33,7 @@ export const add = async (
   console.log(`
 added migration ${green(version)}.${blue(name)} at:
 
-    do: ${green(doFile)}
+      do: ${green(doFile)}
     undo: ${red(undoFile)}${
       includeTest ? `\n    test: ${yellow(testFile)}` : ''
     }

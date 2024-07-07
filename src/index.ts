@@ -4,6 +4,7 @@ import { install } from './install'
 import { ui } from './ui'
 import { add } from './add'
 import { migrate } from './migrate/index.js'
+import { types } from './types'
 
 const init = async () => {
   try {
@@ -34,11 +35,16 @@ const init = async () => {
       .action(version => migrate(version))
 
     program
+      .command('types')
+      .description('generate types from the database schema')
+      .action(types)
+
+    program
       .command('rollback <version>')
       .description('roll back the database')
       .action(() => {})
 
-    program.exitOverride()
+    // program.exitOverride()
 
     program.parse(process.argv)
   } catch (e) {
