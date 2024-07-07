@@ -1,4 +1,4 @@
-FROM node:19.9.0-bullseye-slim
+FROM node:lts-bullseye-slim
 
 RUN apt-get -y update && \
   apt-get install wget sudo curl gnupg2 lsb-release -y && \
@@ -31,10 +31,10 @@ WORKDIR /build
 
 COPY . .
 
-RUN yarn && yarn global add file:/build
+RUN yarn && yarn build
 
 WORKDIR /albatross
 
 COPY test/ .
 
-CMD ["albatross", "migrate"]
+CMD node /build/dist/index.js migrate ; node /build/dist/index.js types ; ls -la
