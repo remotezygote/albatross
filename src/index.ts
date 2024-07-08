@@ -36,6 +36,10 @@ const init = async () => {
 
     program
       .command('types')
+      .option(
+        '-c, --connectionString <connection_string>',
+        'the connection string to connect to the database'
+      )
       .description('generate types from the database schema')
       .action(types)
 

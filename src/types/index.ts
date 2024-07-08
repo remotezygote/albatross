@@ -18,7 +18,10 @@ const outputDir = () => {
   )
 }
 const config: Config = {
-  connection: {}
+  connection: {
+    connectionString:
+      program.opts().connectionString || process.env.DATABASE_URL
+  }
 }
 
 export const types = async (pattern?: string) => {

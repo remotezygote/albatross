@@ -2784,11 +2784,6 @@ json-buffer@3.0.1:
   resolved "https://registry.yarnpkg.com/json-buffer/-/json-buffer-3.0.1.tgz#9338802a30d3b6605fbe0613e094008ca8c05a13"
   integrity sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==
 
-json-custom-numbers@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/json-custom-numbers/-/json-custom-numbers-3.1.1.tgz#c038e33de03eb051d3fdc2b5de3321e3c8920e42"
-  integrity sha512-rYIAIuiIRy58aax2tuZb7HawKFATBG848PiguybJh/R+pvC8jxjEOVBQHj4J3U2D4/Y4acBCO4A/glILW8wPoA==
-
 json-parse-better-errors@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz#bb867cfb3450e69107c131d1c514bab3dc8bcaa9"
@@ -5153,10 +5148,3 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
-
-zapatos@^6.4.2:
-  version "6.4.2"
-  resolved "https://registry.yarnpkg.com/zapatos/-/zapatos-6.4.2.tgz#6fb8032dc0d5c98b9770ed05137a5f8a73279330"
-  integrity sha512-XmE8KVTF+h2FimvJVL+n6z80k3i3dJNGh7PHqU0DdFpNP1papqRufYZ5JZDGbJlGvRZ0zm0UU+InpeWtWoQwkg==
-  dependencies:
-    json-custom-numbers "^3.1.1"
